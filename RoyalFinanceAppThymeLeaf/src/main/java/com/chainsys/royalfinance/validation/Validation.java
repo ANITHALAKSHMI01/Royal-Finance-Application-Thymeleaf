@@ -135,49 +135,4 @@ public class Validation
 		System.out.println(sb);
 		return sb.toString();
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	public boolean checkPincode(String pincode) throws PincodeException
-	{
-		String regex="^\\d{6}$";
-		if(pincode.matches(regex))
-		{
-			return false;
-		}
-		else
-		{
-			throw new PincodeException();
-		}
-	}
-	public boolean checkAccountNo(String accountNo) throws AccountNoException
-	{
-		String regex="^\\d{13}$";
-		if(accountNo.matches(regex))
-		{
-			return false;
-		}
-		else
-		{
-			throw new AccountNoException();
-		}
-	}
-	public boolean checkPAN(String pan) throws PANException
-	{
-		String regex="[A-Z]{5}\\d{4}[A-Z]";
-		if(pan.matches(regex))
-		{
-			return false;
-		}
-		else
-		{
-			throw new PANException();
-		}
-	}
-	
 }

@@ -46,7 +46,7 @@ public class BorrowerController
 		ModelAndView modelAndView = new ModelAndView();
 		if(Boolean.FALSE.equals(validation.checkSalary(salary,loanAmount,tenure)))
 		{
-			if(paySlip!= null && panImage!=null && govId!=null || Boolean.FALSE.equals(validation.checkAccountNo(String.valueOf(accountNo))) || Boolean.FALSE.equals(validation.checkPAN(pan)) || Boolean.FALSE.equals(validation.checkAmount(String.valueOf(salary),String.valueOf(loanAmount),String.valueOf(tenure))))
+			if(paySlip!= null && panImage!=null && govId!=null|| Boolean.FALSE.equals(validation.checkAmount(String.valueOf(salary),String.valueOf(loanAmount),String.valueOf(tenure))))
 			{
 				byte[] slip = paySlip.getBytes();
 				byte[] panProof = panImage.getBytes();
