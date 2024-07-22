@@ -1,5 +1,6 @@
 package com.chainsys.royalfinance.controller;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -8,18 +9,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.chainsys.royalfinance.dao.UserDAO;
-import com.chainsys.royalfinance.exception.AccountNoException;
 import com.chainsys.royalfinance.exception.NumberException;
 import com.chainsys.royalfinance.exception.InsufficientBalanceException;
-import com.chainsys.royalfinance.exception.PANException;
+import com.chainsys.royalfinance.model.Account;
 import com.chainsys.royalfinance.model.Borrower;
 import com.chainsys.royalfinance.model.Loan;
 import com.chainsys.royalfinance.model.Payment;
@@ -40,7 +38,7 @@ public class BorrowerController
 		return "borrowerHomePage";
 	}
 	@PostMapping("/applyloan")
-	public ModelAndView applyLoan(@RequestParam("id") String id,@RequestParam("salary") int salary,@RequestParam("amount") int loanAmount,@RequestParam("repayment") int tenure,@RequestParam("accountNo") long accountNo,@RequestParam("pan") String pan,@RequestParam("paySlip") MultipartFile paySlip,@RequestParam("panImage") MultipartFile panImage,@RequestParam("govId") MultipartFile govId,Model model,RedirectAttributes redirectAttributes) throws IOException, NumberException, AccountNoException, PANException
+	public ModelAndView applyLoan(@RequestParam("id") String id,@RequestParam("salary") int salary,@RequestParam("amount") int loanAmount,@RequestParam("repayment") int tenure,@RequestParam("accountNo") long accountNo,@RequestParam("pan") String pan,@RequestParam("paySlip") MultipartFile paySlip,@RequestParam("panImage") MultipartFile panImage,@RequestParam("govId") MultipartFile govId,Model model,RedirectAttributes redirectAttributes) throws IOException, NumberException
 	{
 		final String borrowerHomePage="borrowerHomePage";
 		ModelAndView modelAndView = new ModelAndView();
@@ -168,52 +166,84 @@ public class BorrowerController
 		}
 		return modelAndView;
 	}
-	@GetMapping("/payemi")
-	public String payEMI(HttpSession session,Model model)
+	@GetMapping("/preclosure")
+	public String preClosure(HttpSession session,Model model)
 	{
+		int preclosureCharge=0;
 		Loan loans=null;
 		String id=(String) session.getAttribute("id");
 		List<Loan> loanDetail=userDAO.getEMI(id,"Unpaid");
+		List<Account> borrowerAccount=userDAO.getUserAccountDetail(id);
 		List<Loan> list=new ArrayList<>();
 		if(!loanDetail.isEmpty())
-		{
 			loans=loanDetail.get(0);
-		}
 		if(loans!=null)
 		{
-//			int emi=loans.getLoanAmount()/loans.getTenure();
 			Loan loan=new Loan();
-//			loan.setLoanId(loans.getLoanId());
-//			loan.setBorrowerId(id);
-//			loan.setDueDate(loans.getDueDate());
-//			loan.setEmi(emi);
-//			loan.setAccountNo(loans.getAccountNo());
+			loan.setBorrowerId(id);
+			double outstandingPrincipal=loans.getBalanceLoanAmount();
+			if(outstandingPrincipal <= 50000)
+				preclosureCharge+=200;
+		    else if (outstandingPrincipal <= 100000) 
+		    	preclosureCharge+=400;
+		    else 
+		    	preclosureCharge+=600;
+			loan.setLoanId(loans.getLoanId());
+			loan.setBalanceLoanAmount(outstandingPrincipal+preclosureCharge);
+			loan.setAccountNo(borrowerAccount.get(0).getAccountNo());
 			list.add(loan);
 			model.addAttribute("list",list);
 		}
-		return "payEMI";
+		return "loanPreclosure";
 	}
+//	@GetMapping("/payemi")
+//	public String payEMI(HttpSession session,Model model)
+//	{
+//		Loan loans=null;
+//		String id=(String) session.getAttribute("id");
+//		List<Loan> loanDetail=userDAO.getEMI(id,"Unpaid");
+//		List<Loan> list=new ArrayList<>();
+//		if(!loanDetail.isEmpty())
+//		{
+//			loans=loanDetail.get(0);
+//		}
+//		if(loans!=null)
+//		{
+////			int emi=loans.getLoanAmount()/loans.getTenure();
+//			Loan loan=new Loan();
+////			loan.setLoanId(loans.getLoanId());
+////			loan.setBorrowerId(id);
+////			loan.setDueDate(loans.getDueDate());
+////			loan.setEmi(emi);
+////			loan.setAccountNo(loans.getAccountNo());
+//			list.add(loan);
+//			model.addAttribute("list",list);
+//		}
+//		return "payEMI";
+//	}
+	
 	@PostMapping("/updatepayment")
-	public String updatePayment(@RequestParam("id") String borrowerId,@RequestParam("loanId") int loanId,@RequestParam("amount") int amount,@RequestParam("account") long accountNo,@RequestParam("date") String date) throws InsufficientBalanceException
+	public String updatePayment(@RequestParam("id") String borrowerId,@RequestParam("loanId") int loanId,@RequestParam("amount") double amount,@RequestParam("account") long accountNo,@RequestParam("status") int value) throws InsufficientBalanceException
 	{
-		int balance=0;
+		
+		LocalDate dateToday = LocalDate.now(); 
+		String dateString =dateToday.toString();
+		double balance=0;
 		long adminAccountNo=6754321890765l;
-//		int adminTotalBalance=userDAO.getTotalBalance(adminAccountNo);
-//		int borrowerTotalBalance=userDAO.getTotalBalance(accountNo);
-//		if(borrowerTotalBalance>0)
-//		{
-//			balance=borrowerTotalBalance-amount;
-//		}
-//		else
-//		{
-//			throw new InsufficientBalanceException();
-//		}
-//		int creditAmount=adminTotalBalance+amount;
-//		userDAO.updateBalance(adminAccountNo, creditAmount);
+		List<Account> borrowerAccount=userDAO.getUserAccountDetail(borrowerId);
+		List<Account> adminAccount=userDAO.getUserAccountDetail("Ani65");
+		double adminTotalBalance=adminAccount.get(0).getTotalBalance();
+		double borrowerTotalBalance=borrowerAccount.get(0).getTotalBalance();
+		if(borrowerTotalBalance>0)
+			balance=borrowerTotalBalance-amount;
+		else
+			throw new InsufficientBalanceException();
+		double creditAmount=adminTotalBalance+amount;
+		userDAO.updateBalance(adminAccountNo, creditAmount);
 		userDAO.updateBalance(accountNo, balance);
-		userDAO.updatePaymentStatus("Paid", loanId);
-		Payment payment=new Payment(borrowerId,date,accountNo,adminAccountNo,amount);
+		userDAO.updatePaymentStatus("Paid",value,loanId);
+		Payment payment=new Payment(borrowerId,dateString,accountNo,adminAccountNo,amount);
 		userDAO.addPaymentHistory(payment);
-		return "paymentSuccessfull";
+		return "borrowerHomePage";
 	}
 }

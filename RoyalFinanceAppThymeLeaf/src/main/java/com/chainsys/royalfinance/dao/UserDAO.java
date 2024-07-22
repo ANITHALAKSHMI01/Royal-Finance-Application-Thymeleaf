@@ -35,9 +35,9 @@ public interface UserDAO
 	public List<Loan> searchLoan(String searchData);
 	public void updateBillStatus(String id);
 	public void updateBalance(long accountNo,double amount);
-	public List<Loan> getLoanById(String id);
+//	public List<Loan> getLoanById(String id);
 	public List<Loan> getEMI(String id,String paymentStatus);
-	public void updatePaymentStatus(String paymentStatus,int loanId);
+	public void updatePaymentStatus(String paymentStatus,int status,int loanId);
 	public void updatePenalty(int penalty,int loanId);
 	public int totalBorrowers();
 	public int totalApprovedBorrowers();

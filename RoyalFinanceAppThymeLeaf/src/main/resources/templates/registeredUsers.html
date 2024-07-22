@@ -3,11 +3,11 @@
 <head>
 <meta charset="ISO-8859-1">
 <link rel="stylesheet" th:href="@{/css/userDashboard.css}">
-<link rel="stylesheet" th:href="@{/css/table.css}"> 
+<link rel="stylesheet" th:href="@{/css/table.css}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="icon" type="image/x-icon" href="images/flogo.jpg">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<title>Loan Details</title>
+<title>Registered Users</title>
 </head>
 <body>
 <aside id="sidebar">
@@ -39,35 +39,40 @@
             </li>
         </ul>
 </aside>
-<form th:action="@{/searchloandetail}" method="get">
-        <input type="text" placeholder="Search" class="search" name="searchData">
+	<form th:action="@{/searchuser}" method="get" class="search">
+	<input type="search" name="searchData" placeholder="Search">
 </form>
-    <table>
-        <thead>
-            <tr>
-                <th>Loan Id</th>
-                <th>Borrower Id</th>
-                <th>Loan Issued</th>
-                <th>Outstanding Tenure(In Months)</th>
-                <th>Outstanding Principal</th>
-                <th>EMI</th>
-                <th>Payment Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="amount : ${loans}">
-                <td th:text="${amount.loanId}"></td>
-                <td th:text="${amount.borrowerId}"></td>
-                <td th:text="${amount.date}"></td>
-                <td th:text="${amount.tenure}"></td>
-                <td th:text="${amount.balanceLoanAmount}"></td>
-                <td th:text="${amount.emi}"></td>
-                <td th:text="${amount.paymentStatus}"></td>
-            </tr>
-            <tr th:if="${#lists.isEmpty(loans)}">
-                <td colspan="7">No Records found</td>
-            </tr>
-        </tbody>
-    </table>
+ <table border="1px" cellspacing="0px">
+	<thead>
+		<tr>
+	<th>Borrower Id</th>
+	 <th>Name</th>
+	 <th>Date Of Birth</th>
+	 <th>Phone Number</th>
+	 <th>Email Id</th>
+	  <th>Location</th>
+	 <th>Delete</th>
+	   </tr>
+	</thead>
+	<tbody>
+	  <tr th:each="user : ${users}">
+	  <td th:text="${user.getId()}"></td>
+	   <td th:text="${user.getName()}"></td>
+	   <td th:text="${user.getDateOfBirth()}"></td>
+	   <td th:text="${user.getPhoneNo()}"></td>
+	   <td th:text="${user.getEmail()}"></td>
+	   <td th:text="${user.getLocation()}"></td>
+	    <td>
+            <form th:action="@{/removeuser}" method="get">
+                  <input type="hidden" name="deleteId" th:value="${user.getId()}">
+                  <input type="submit"  name="delete" value="Delete" class="button">
+            </form>
+          </td> 
+	  </tr>
+	      <tr th:unless="${users!=null and not #lists.isEmpty(users)}">
+	          <td colspan="15">No Records found</td>
+	      </tr>
+	</tbody>
+</table> 
 </body>
 </html>

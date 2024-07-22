@@ -4,6 +4,7 @@ public class Borrower
 {
 	private int applicationId;
 	private String borrowerId;
+	private String address;
 	private int salary;
 	private int loanAmount;
 	private int tenure;
@@ -117,12 +118,22 @@ public class Borrower
 	{
 		this.status = status;
 	}
+	public String getAddress() 
+	{
+		return address;
+	}
+	public void setAddress(String address) 
+	{
+		this.address = address;
+	}
 	@Override
 	public String toString() 
 	{
-		return "Borrower [applicationId=" + applicationId + ", borrowerId=" + borrowerId + ", salary=" + salary
-				+ ", loanAmount=" + loanAmount + ", tenure=" + tenure + ", accountNo=" + accountNo + ", pan=" + pan
-				+ ", paySlip=" + Arrays.toString(paySlip) + ", panProof=" + Arrays.toString(panProof)
-				+ ", governmentId=" + Arrays.toString(governmentId) + ", status=" + status +"]";
-	}	
+		return "Borrower [applicationId=" + applicationId + ", borrowerId=" + borrowerId + ", address=" + address
+				+ ", salary=" + salary + ", loanAmount=" + loanAmount + ", tenure=" + tenure + ", accountNo="
+				+ accountNo + ", pan=" + pan + ", paySlip=" + Arrays.toString(paySlip) + ", panProof="
+				+ Arrays.toString(panProof) + ", governmentId=" + Arrays.toString(governmentId) + ", status=" + status
+				+ "]";
+	}
+	
 }

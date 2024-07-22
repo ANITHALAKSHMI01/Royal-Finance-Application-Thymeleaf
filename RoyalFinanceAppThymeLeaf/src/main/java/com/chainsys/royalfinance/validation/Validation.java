@@ -1,14 +1,14 @@
 package com.chainsys.royalfinance.validation;
 import java.util.Random;
 import org.springframework.stereotype.Repository;
-import com.chainsys.royalfinance.exception.AccountNoException;
 import com.chainsys.royalfinance.exception.NumberException;
 import com.chainsys.royalfinance.exception.EmailException;
 import com.chainsys.royalfinance.exception.NameException;
-import com.chainsys.royalfinance.exception.PANException;
 import com.chainsys.royalfinance.exception.PasswordExcepion;
 import com.chainsys.royalfinance.exception.PhoneNoException;
-import com.chainsys.royalfinance.exception.PincodeException;
+//import net.sourceforge.tess4j.Tesseract;
+//import net.sourceforge.tess4j.TesseractException;
+//import net.sourceforge.tess4j.util.LoadLibs;
 @Repository
 public class Validation
 {
@@ -135,4 +135,35 @@ public class Validation
 		System.out.println(sb);
 		return sb.toString();
 	}
+//	 public Borrower extractAadhaarDetails(MultipartFile file) throws IOException, TesseractException 
+//	 {
+//	        File tempFile = File.createTempFile("temp-aadhaar", ".jpg");
+//	        file.transferTo(tempFile);
+//
+//	        Tesseract tesseract = new Tesseract();
+//	        tesseract.setDatapath(LoadLibs.extractTessResources("tessdata").getAbsolutePath()); // Set Tesseract data path
+//
+//	        String extractedText = tesseract.doOCR(tempFile);
+//	        System.out.println("Extracted Text:\n" + extractedText);
+//
+//	        Borrower aadhaarDetails = parseBorrower(extractedText);
+//
+//	        tempFile.delete();
+//
+//	        return aadhaarDetails;
+//	    }
+//	    private Borrower parseBorrower(String extractedText)
+//	    {
+//	    	final String aadharRegex = "\\d{4}\\s\\d{4}\\s\\d{4}";
+//	    	 Borrower details = new Borrower();
+//
+//	         Pattern pattern = Pattern.compile(aadharRegex);
+//	         Matcher matcher = pattern.matcher(extractedText);
+//	         if (matcher.find()) 
+//	         {
+//	             details.setAddress(matcher.group(0).replace(" ", ""));
+//	         }
+//	         System.out.println(details);
+//	         return details;
+//	    }
 }

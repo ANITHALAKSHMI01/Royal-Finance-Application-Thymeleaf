@@ -3,19 +3,12 @@
 <head>
 <meta charset="ISO-8859-1">
 <link rel="stylesheet" th:href="@{/css/userDashboard.css}">
-<link rel="stylesheet" th:href="@{/css/form.css}">
+<link rel="stylesheet" th:href="@{/css/card.css}"> 
  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="icon" type="image/x-icon" href="images/flogo.jpg">
-<title>Borrower Home</title>
+<title>Loan Preclosure</title>
 </head>
-<style>
-.alert 
-{
-    position:relative;
-    bottom:250px;
-}
-</style>
 <body>
 <aside id="sidebar">
         <div class="sidebar-header">
@@ -35,9 +28,6 @@
             <li>
                 <a th:href="@{/getreceipt}" class="ul-atag"><i class="fas fa-receipt"></i> Invoice</a>
             </li>
-         <!--    <li>
-                <a th:href="@{/payemi}"><i class="fas fa-money-bill-wave"></i> Pay EMI</a> 
-            </li> -->
             <li class="nav-item dropdown" id ="profile">
                   <i class="fas fa-money-bill-wave" style="padding: 0 6px 0 0;"></i> Pay EMI
                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -56,43 +46,24 @@
             </li>
         </ul>
 </aside>
- <div class="container">
-            <h1>Welcome to Your Dashboard</h1>
-            <p>Manage your finances efficiently with Royal Finance.</p>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Quick Links</h5>
-                            <ul>
-                                <li><a th:href="@{/allowborrower}">Apply for a loan</a></li>
-                                <li><a th:href="@{/appliedloandetail}">View loan status</a></li>
-                                <li><a th:href="@{/paymenthistory}">View payment history</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Your Account</h5>
-                            <p>Details</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<div th:each="loan : ${list}" class="loan-item">
+        <div class="loan-details">
+            <label><b>Loan Id:</b></label><p th:text="${loan.loanId}" class="out"></p><br>
+            <label><b>Borrower Id:</b></label><p th:text="${loan.borrowerId}" class="out"></p><br>
+            <label><b>Date:</b></label><p th:text="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" class="out"></p><br>
+            <label><b>Acc. No:</b></label><p class="out" th:text="${loan.accountNo}"></p><br>
+            <label><b>Admin Acc. No:</b></label><p class="out">6754321890765</p><br>
+            <label><b>IFSC code:</b></label><p class="out">ABCD0123456</p><br>
+            <label><b>Amount:</b></label><p th:text="${loan.balanceLoanAmount}" class="out"></p><br>
+            <form action="/updatepayment" method="post">
+                <input type="hidden" name="loanId" th:value="${loan.loanId}">
+                <input type="hidden" name="id" th:value="${loan.borrowerId}">
+                <input type="hidden" name="account" th:value="${loan.accountNo}">
+                <input type="hidden" name="amount" th:value="${loan.balanceLoanAmount}">
+                <input type="hidden" name="status" th:value="1">
+                <button>Pay</button>
+            </form>
         </div>
-  		<div th:if="${message}">
-        <div th:class="'alert alert-' + ${type}" role="alert">
-            <span th:text="${message == 'loginSuccessfull' ? 'Login successfull!' :
-                            message == 'loginUnsuccessfull' ? 'Invalid login credentials.' :
-            				message == 'successfullApplication' ? 'Loan applied successfully!' :
-                            message == 'unSuccessfullApplication' ? 'Something went wrong. Please try again later.' : 
-                            message == 'noReceipt' ? 'You do not have a loan!' :
-                            message == 'alreadyApplied' ? 'You already have a loan!' :
-                            message == 'noDetail' ? 'You did not apply loan!' : 
-                            message == 'viewDetail' ? 'Have a nice day!' : ''}"></span>            
-        </div>
-    </div>
+</div>
 </body>
 </html>

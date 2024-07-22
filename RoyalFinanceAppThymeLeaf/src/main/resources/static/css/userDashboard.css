@@ -1,16 +1,17 @@
 @charset "ISO-8859-1";
-* {
+* 
+{
     box-sizing: border-box;
     padding: 0;
     margin: 0;
 }
-
-body {
-   /*  overflow-x: hidden; */
+body 
+{
     font-family: Arial, sans-serif;
     background-color: #f8f9fa; 
 }
-#sidebar {
+#sidebar
+{
     position: fixed;
     left: 0;
     top: 0;
@@ -21,18 +22,17 @@ body {
     padding-top: 20px;
     z-index:1;
 }
-
-.sidebar-header {
+.sidebar-header
+{
     text-align: center;
     margin-bottom: 20px;
 }
-
-.sidebar-header img {
+.sidebar-header img 
+{
     width: 55px;
     height: 55px;
     border-radius: 50%;
 }
-
 .sidebar-header h4 {
     margin-top: 10px;
     font-size: 18px;
@@ -42,31 +42,30 @@ body {
     padding: 20px 0;
 }
 
-#sidebar ul li {
+#sidebar ul li 
+{
     padding: 10px 15px;
     font-size: 16px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Example: adjust border color */
 }
-
-#sidebar ul li a {
+.ul-atag
+{
     color: white;
     text-decoration: none;
     display: block;
 }
-
-#sidebar ul li a i {
+#sidebar ul li a i
+{
     margin-right: 10px;
 }
-
 #sidebar ul li a:hover {
-    background-color: rgba(255, 255, 255, 0.1); /* Example: adjust hover background color */
+    background-color: rgba(255, 255, 255, 0.1);
 }
 #content 
 {
     margin-left: 220px;
     padding: 20px;
 }
-
 #content h1 
 {
     margin-bottom: 20px;
@@ -76,28 +75,29 @@ body {
 	position:relative;
 	right:200px;
 }
-.card {
+.card 
+{
     margin-bottom: 20px;
     border: 1px solid #ddd;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-
-.card-body {
+.card-body 
+{
     padding: 10px;
 }
-
-.card-title {
+.card-title 
+{
     font-size: 20px;
     margin-bottom: 15px;
 }
-
-.card ul {
+.card ul 
+{
     list-style-type: none;
     padding-left: 0;
 }
-
-.card ul li {
+.card ul li 
+{
     margin-bottom: 10px;
 }
 .container
@@ -106,8 +106,10 @@ body {
 	top:100px;
 	left:200px;
 }
-@media (max-width: 768px) {
-    #sidebar {
+@media (max-width: 768px) 
+{
+    #sidebar 
+    {
         width: 100%;
         height: auto;
         position: relative;
@@ -118,16 +120,31 @@ body {
         color: white;
         margin-bottom: 20px;
     }
-
-    #sidebar ul li {
+    #sidebar ul li
+     {
         border-bottom: none;
     }
-
-    #sidebar ul li a {
+    #sidebar ul li a 
+    {
         color: white;
     }
-
-    #content {
+    #content 
+    {
         margin-left: 0;
     }
+}
+.dropdown-menu 
+{
+    background-color: #F5F5F5;
+    border: none;
+}
+.dropdown-item:hover 
+{
+    background-color: #E8E5D7;
+    border-radius: 12px; 
+}
+.dropdown:hover .dropdown-menu 
+{
+   display: block;
+   margin-left:100px;
 }
