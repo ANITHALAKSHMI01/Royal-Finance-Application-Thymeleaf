@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/css/userDashboard.css}">
+<link rel="stylesheet" th:href="@{/css/table.css}"> 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="icon" type="image/x-icon" href="images/flogo.jpg">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<title>Payments</title>
+</head>
+<body>
+<aside id="sidebar">
+        <div class="sidebar-header">
+            <img th:src="@{/images/flogo.jpg}" alt="image" id="image1">
+            <h4>Royal Finance</h4>
+        </div>
+        <ul class="list-unstyled components">
+        	<li>
+                <a th:href="@{/adminhomepage}"><i class="fas fa-home"></i> Home</a>
+            </li>
+            <li>
+                <a th:href="@{/listallusers}"><i class="fas fa-file-alt"></i> Registered Users</a>
+            </li>
+            <li>
+                <a th:href="@{/listallborrowers}"><i class="fas fa-info-circle"></i> Borrowers</a>
+            </li>
+            <li>
+                <a th:href="@{/getallloans}"><i class="fas fa-receipt"></i> Loan Details</a>
+            </li>
+            <li>
+                <a th:href="@{/paymenthistory}"><i class="fas fa-history"></i> Payment History</a>
+            </li>
+            <li>
+                <a th:href="@{/userdetail}"><i class="fas fa-user"></i> Profile</a>
+            </li>
+            <li>
+                <a th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </li>
+        </ul>
+</aside>
+    <table>
+        <thead>
+            <tr>
+                <th>Payment ID</th>
+                <th>Date</th>
+                <th>From Account</th>
+                <th>To Account</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="payment : ${payment}">
+                <td th:text="${payment.paymentId}"></td>
+                <td th:text="${payment.date}"></td>
+                <td th:text="${payment.fromAccount}"></td>
+                <td th:text="${payment.toAccount}"></td>
+                <td th:text="${payment.amount}"></td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(payment)}">
+                <td colspan="5" class="no-records">No Records found</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
+
+</body>
+</html>

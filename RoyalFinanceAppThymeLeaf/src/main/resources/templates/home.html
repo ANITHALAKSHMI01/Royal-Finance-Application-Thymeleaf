@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/css/home.css}">
+<link rel="icon" type="image/x-icon" href="images/flogo.jpg">
+<title>Royal Finance</title>
+</head>
+<body>
+<nav id="navbar">
+    <section id="left_nav">
+        <img th:src="@{/images/flogo.jpg}" alt="image" id="image1">
+        <h4>Royal Finance</h4>
+    </section>
+    <section id="right_nav">
+        <aside><a href="#" style="color: transparent;"><p style="color:white; font-size:22px;">Home</p></a></aside>
+        <aside><a href="#" style="color: transparent;"><p style="color:white; font-size:22px;">About</p></a></aside>
+        <aside>
+            <a th:href="@{/login}" style="color: transparent;"><p style="color:white; font-size:22px;">Login</p></a>
+        </aside>
+        <aside><a href="#contact" style="color: transparent;"><p style="color:white; font-size:22px;">Contact Us</p></a></aside>
+    </section>
+</nav>
+<div>
+    <section class="sec">
+        <h1>Royal Finance</h1>
+        <h3>Money is numbers and numbers never end.</h3>
+        <h3>If it takes money to be happy. </h3>
+    </section>
+    <section class="sec"><img alt="image" th:src="@{/images/home.jpg}" id="image2"></section>
+</div>
+</body>
+</html>

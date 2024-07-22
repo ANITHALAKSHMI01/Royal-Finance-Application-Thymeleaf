@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/css/image.css}">
+<title>Pay Slip</title>
+</head>
+<body>
+<div>
+    <table>
+        <thead>
+        <tr>
+            <th>Pay Slip</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                <img th:src="${paySlip}" alt="Pay Slip">
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/listallborrowers}"><button>Back</button></a>
+</div>
+</body>
+</html>

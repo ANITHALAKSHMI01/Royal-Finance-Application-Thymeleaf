@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" th:href="@{/css/userDashboard.css}">
+<link rel="stylesheet" th:href="@{/css/form.css}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="icon" type="image/x-icon" href="images/flogo.jpg">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<title>Admin Home</title>
+</head>
+<style>
+.alert 
+{
+    position:relative;
+    bottom:200px;
+}
+</style>
+<body>
+<aside id="sidebar">
+        <div class="sidebar-header">
+            <img th:src="@{/images/flogo.jpg}" alt="image" id="image1">
+            <h4>Royal Finance</h4>
+        </div>
+        <ul class="list-unstyled components">
+            <li>
+                <a th:href="@{/adminhomepage}"><i class="fas fa-home"></i> Home</a>
+            </li>
+            <li>
+                <a th:href="@{/listallusers}"><i class="fas fa-file-alt"></i> Registered Users</a>
+            </li>
+            <li>
+                <a th:href="@{/listallborrowers}"><i class="fas fa-info-circle"></i> Borrowers</a>
+            </li>
+            <li>
+                <a th:href="@{/getallloans}"><i class="fas fa-receipt"></i> Loan Details</a>
+            </li>
+            <li>
+                <a th:href="@{/paymenthistory}"><i class="fas fa-history"></i> Payment History</a>
+            </li>
+            <li>
+                <a th:href="@{/userdetail}"><i class="fas fa-user"></i> Profile</a>
+            </li>
+            <li>
+                <a th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </li>
+        </ul>
+</aside>
+ <div class="container">
+            <h1>Welcome to Your Dashboard</h1>
+            <p>Manage your finances efficiently with Royal Finance.</p>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Borrowers</h5>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Your Account Details</h5>
+                            <p>Details.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+  <div th:if="${message}">
+        <div th:class="'alert alert-' + ${type}" role="alert">
+            <span th:text="${
+            				message == 'loginSuccessfull' ? 'Login Successfull!' :
+                            message == 'loginUnsuccessfull' ? 'Invalid Login Credentials.' : ''}"></span>
+ 		</div>
+</div>
+        <!-- <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Account Summary</h5>
+                            <p>Your account details and summary here.</p>
+                        </div>
+                    </div>
+                </div>
+        <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Account Summary</h5>
+                            <p>Your account details and summary here.</p>
+                        </div>
+                    </div>
+                </div> -->
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+	<!-- <div class="main_block">
+		<main>
+		<div class="card">
+		<div class="card-inner">
+			<div class="card-front">
+				<p class="head">Current Registered Borrowers</p>
+			</div>
+			<div class="card-back">
+				<% int totalUsers=0;
+				ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+				UserDAOImpl userDAOImpl = (UserDAOImpl) context.getBean("userDAOImpl");
+				try
+				{
+					totalUsers=userDAOImpl.totalRegisteredUsers(); 
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				} 
+			    %>
+			<p class="value"><%=totalUsers%></p>
+			</div>
+		</div>
+	</div>
+	</main>
+	<main>
+		<div class="card">
+		<div class="card-inner">
+			<div class="card-front">
+			<p class="head">Current Lenders</p>
+			</div>
+			<div class="card-back">
+				<% int totalLenders=0;
+				try
+				{
+					totalLenders=userDAOImpl.totalLenders();
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
+				%>
+			<p class="value"><%=totalLenders%></p>
+			</div>
+		</div>
+	</div>
+	</main>
+	<main>
+		<div class="card">
+		<div class="card-inner">
+			<div class="card-front">
+			<p class="head">Current Approved Lenders</p>
+			</div>
+			<div class="card-back">
+				<%
+				int totalApprovedLenders=0;
+				try
+				{
+					totalApprovedLenders=userDAOImpl.totalApprovedLenders();;
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
+			    %>
+			<p class="value"><%=totalApprovedLenders%></p>
+			</div>
+		</div>
+	</div>
+	</main>
+	</div>
+	<div class="main_block1">
+		<main>
+			<div class="card">
+		<div class="card-inner">
+			<div class="card-front">
+			<p class="head">Check Balance</p>
+			</div>
+			<div class="card-back">
+				<% 
+				long accountNo=6754321890765l;
+				int totalBalance=0;
+				try
+				{
+					totalBalance=userDAOImpl.getTotalBalance(accountNo);
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
+			    %>
+			<p class="value"><%=totalBalance%></p>
+			</div>
+		</div>
+	</div>
+		</main>
+		<main>
+			<div class="card">
+		<div class="card-inner">
+			<div class="card-front">
+			<p class="head">Profit</p>
+			</div>
+			<div class="card-back">
+				<% 
+				int profit=0;
+				try
+				{
+					profit=userDAOImpl.calculateProfit();
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
+			    %>
+			<p class="value"><%=profit%></p>
+			</div>
+		</div>
+	</div>
+		</main>
+		<main>
+			<div class="card">
+		<div class="card-inner">
+			<div class="card-front">
+			<p class="head">Granted loan</p>
+			</div>
+			<div class="card-back">
+				<% 
+				int providedLoan=0;
+				try
+				{
+					providedLoan=userDAOImpl.calculateTotalLoan();
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
+			    %>
+			<p class="value"><%=providedLoan%></p>
+			</div>
+		</div>
+	</div>
+		</main>
+	</div> -->
+</body>
+</html>

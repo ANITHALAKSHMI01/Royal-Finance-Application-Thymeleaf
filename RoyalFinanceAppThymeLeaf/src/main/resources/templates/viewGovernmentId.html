@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" th:href="@{/css/image.css}">
+<title>Government Id</title>
+</head>
+<body>
+<div>
+    <table>
+        <thead>
+        <tr>
+            <th>Government Id</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                <img th:src="${governmentId}" alt="Government Id">
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/listallborrowers}"><button>Back</button></a>
+</div>
+</body>
+</html>

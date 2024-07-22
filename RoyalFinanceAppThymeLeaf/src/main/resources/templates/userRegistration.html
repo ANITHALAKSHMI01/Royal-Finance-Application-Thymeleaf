@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/css/form.css}">
+<script th:src="@{/javascript/userRegistration.js}"></script>
+ <title>User Registration</title>
+</head>
+<body>
+<h1>User Registration</h1>
+<div>
+    <form th:action="@{/register}" id="myForm" method="post" onsubmit="return validateForm()">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input id="name" type="text" name="name" placeholder="Name" th:oninput="validateName()" required>
+            <div id="nameError" class="error-message"></div>
+        </div>
+        <div class="form-group">
+            <label for="dob">D.O.B</label>
+            <input id="dob" type="date" name="dateOfBirth" max="2003-01-01" min="1967-01-01">
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input id="phone" type="tel" name="phoneNo" placeholder="Phone Number" th:oninput="validatePhoneNo()" maxlength="10" required>
+            <div id="phoneNoError" class="error-message"></div>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input id="email" type="email" placeholder="Email Id"  name="emailId" th:oninput="validateEmail()" required>
+            <div id="emailError" class="error-message"></div>
+        </div>
+        <div class="form-group">
+            <label for="pass">Password</label>
+            <input id="pass" type="password" placeholder="Password" name="password" th:oninput="validatePassword()" maxlength="6" required>
+            <div id="passwordError" class="error-message"></div>
+        </div>
+        <div class="form-group">
+            <label for="loc">Location</label>
+            <select name="location" id="loc" required>
+                <option th:each="location : ${locations}" th:text="${location}" th:value="${location}">Location</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Register">
+        </div>
+    </form>
+</div>
+</body>
+</html>

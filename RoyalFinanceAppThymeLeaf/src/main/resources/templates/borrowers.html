@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" th:href="@{/css/userDashboard.css}">
+<link rel="stylesheet" th:href="@{/css/table.css}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="icon" type="image/x-icon" href="images/flogo.jpg">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<title>Borrowers</title>
+<style>
+#button1
+{
+	width:100px;
+}
+.alert 
+{
+    padding: 5px;
+    text-align: center; 
+    margin: 0 auto;     
+    width: 31%;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    position:relative;
+    bottom:700px;
+}
+.alert-success 
+{
+    color: #155724;
+    font-size:15px;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+.alert-danger 
+{
+    color: red;
+    font-size:15px;
+    background-color: #f8d7da;
+    border-color: red;
+}
+</style>
+</head>
+<body>
+<aside id="sidebar">
+        <div class="sidebar-header">
+            <img th:src="@{/images/flogo.jpg}" alt="image" id="image1">
+            <h4>Royal Finance</h4>
+        </div>
+        <ul class="list-unstyled components">
+            <li>
+                <a th:href="@{/adminhomepage}"><i class="fas fa-home"></i> Home</a>
+            </li>
+            <li>
+                <a th:href="@{/listallusers}"><i class="fas fa-file-alt"></i> Registered Users</a>
+            </li>
+            <li>
+                <a th:href="@{/listallborrowers}"><i class="fas fa-info-circle"></i> Borrowers</a>
+            </li>
+            <li>
+                <a th:href="@{/getallloans}"><i class="fas fa-receipt"></i> Loan Details</a>
+            </li>
+            <li>
+                <a th:href="@{/paymenthistory}"><i class="fas fa-history"></i> Payment History</a>
+            </li>
+            <li>
+                <a th:href="@{/userdetail}"><i class="fas fa-user"></i> Profile</a>
+            </li>
+            <li>
+                <a th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </li>
+        </ul>
+</aside>
+<form th:action="@{/searchborrower}" method="get">
+        <input type="text" placeholder="Search" class="search" name="searchData">
+</form>
+<table border="1px" cellspacing="0px">
+        <thead>
+            <tr>
+                <th>Borrower Id</th>
+                <th>Salary/Month</th>
+                <th>Loan Amount</th>
+                <th>Tenure(In Months)</th>
+                <th>Pay Slip</th>
+                <th>PAN</th>
+                <th>Government Id</th>
+                <th>Status</th>
+                <th>Approval</th>
+                <th>Generate Bill</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr th:each="borrower : ${borrowers}">
+                <td th:text="${borrower.borrowerId}"></td>
+                <td th:text="${borrower.salary}"></td>
+                <td th:text="${borrower.loanAmount}"></td>
+                <td th:text="${borrower.tenure}"></td>
+                <td>
+                    <form th:action="@{/viewpayslip}" method="post">
+                        <input type="hidden" name="viewId" th:value="${borrower.borrowerId}">
+                        <input type="submit" name="view" value="View" id="button1">
+                    </form>
+                </td>
+                <td>
+                    <form th:action="@{/viewpanproof}" method="post">
+                        <input type="hidden" name="viewId" th:value="${borrower.borrowerId}">
+                        <input type="submit" name="view" value="View" id="button1">
+                    </form>
+                </td>
+                <td>
+                    <form th:action="@{/viewgovernmentid}" method="post">
+                        <input type="hidden" name="viewId" th:value="${borrower.borrowerId}">
+                        <input type="submit" name="view" value="View" id="button1">
+                    </form>
+                </td>
+                <td th:text="${borrower.status}"></td>
+                <td>
+                    <form th:action="@{/updatestatus}" method="get">
+                        <input type="hidden" name="id" th:value="${borrower.applicationId}"><br>
+                        <input type="submit" name="approval" value="Approved" id="button1"><br>
+                         <input type="submit" name="approval" value="Rejected" style="width:100px;" class="button"><br>
+                         <input type="submit" name="approval" value="Unapproved" id="button1">   
+                    </form>
+                </td>
+                <td>
+                    <form th:action="@{/issueloan}" method="post">
+                        <input type="hidden" name="id" th:value="${borrower.borrowerId}">
+                        <input type="hidden" name="applicationId" th:value="${borrower.applicationId}">
+                        <input type="hidden" name="amount" th:value="${borrower.loanAmount}">
+                        <input type="hidden" name="tenure" th:value="${borrower.tenure}">
+                        <input type="submit" name="pay" value="Pay Now" id="button1">
+                    </form>
+                </td>
+            </tr>
+            <tr th:if="${borrowers != null and #lists.isEmpty(borrowers)}">
+                <td colspan="15">No Records found</td>
+            </tr>
+        </tbody>
+    </table>
+    <div th:if="${message}">
+        <div th:class="'alert alert-' + ${type}" role="alert">
+            <span th:text="${message == 'paymentSuccessfull' ? 'Paid successfull!' :
+                            message == 'paymentUnsuccessfull' ? 'Payment unsuccessfull.' : ''}"></span>
+ 		</div>
+</div>
+</body>
+</html>

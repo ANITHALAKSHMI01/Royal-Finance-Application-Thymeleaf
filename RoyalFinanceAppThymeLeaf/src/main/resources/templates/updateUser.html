@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" th:href="@{/css/form.css}">
+<script th:src="@{/javascript/userRegistration.js}"></script>
+<title>Update Details</title>
+</head>
+<body>
+<div>
+	<form th:action="@{/updateuserdetails}" id="myForm" method="post" onsubmit="return validateForm()">
+		<div class="form-group">
+            <label for="id">Name</label>
+            <input id="id" type="text" name="id" placeholder="Id" th:value="${session.id}" readonly>
+        </div>
+		<div class="form-group">
+            <label for="name">Name</label>
+            <input id="name" type="text" name="name" placeholder="Name" th:value="${param.name}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input id="phone" type="tel" name="phoneNo" placeholder="Phone Number" th:oninput="validatePhoneNo()" maxlength="10" required>
+            <div id="phoneNoError" class="error-message"></div>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input id="email" type="email" placeholder="Email Id"  th:value="${param.email}" name="emailId" readonly>
+        </div>
+        <div class="form-group">
+            <label for="loc">Location</label>
+            <select name="location" id="loc" required>
+                <option th:each="location : ${locations}" th:text="${location}" th:value="${location}">Location</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Update">
+        </div>
+    </form>
+</div>
+</body>
+</html>

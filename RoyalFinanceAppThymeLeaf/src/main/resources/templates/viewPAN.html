@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" th:href="@{/css/image.css}">
+<title>PAN Image</title>
+</head>
+<body>
+<div>
+    <table>
+        <thead>
+        <tr>
+            <th>PAN</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                <img th:src="${pan}" alt="PAN Image" style="width: 500px;height: 300px;">
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/listallborrowers}"><button style="position: relative;left: 200px;">Back</button></a>
+</div>
+</body>
+</html>

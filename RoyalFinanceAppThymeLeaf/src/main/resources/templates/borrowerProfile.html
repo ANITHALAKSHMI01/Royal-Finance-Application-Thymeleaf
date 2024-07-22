@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" th:href="@{/css/userDashboard.css}">
+<link rel="stylesheet" th:href="@{/css/card.css}"> 
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="icon" type="image/x-icon" href="images/flogo.jpg">
+<title>Borrower Profile</title>
+</head>
+<style>
+	button
+	{
+		position:relative;
+		top:20px;
+		background-color: rgb(88, 171, 199);
+	}
+	button:hover 
+   {
+      box-shadow: 5px 5px 20px rgb(19, 19, 21);
+   }
+</style>
+<body>
+<aside id="sidebar">
+        <div class="sidebar-header">
+            <img th:src="@{/images/flogo.jpg}" alt="image" id="image1">
+            <h4>Royal Finance</h4>
+        </div>
+        <ul class="list-unstyled components">
+           <li>
+                <a th:href="@{/borrowerhomepage}"><i class="fas fa-home"></i> Home</a>
+            </li>
+            <li>
+                <a th:href="@{/allowborrower}"><i class="fas fa-file-alt"></i> Apply</a>
+            </li>
+            <li>
+                <a th:href="@{/appliedloandetail}"><i class="fas fa-info-circle"></i> Status</a>
+            </li>
+            <li>
+                <a th:href="@{/getreceipt}"><i class="fas fa-receipt"></i> Invoice</a>
+            </li>
+            <li>
+                <a th:href="@{/payemi}"><i class="fas fa-money-bill-wave"></i> Pay EMI</a>
+            </li>
+            <li>
+                <a th:href="@{/paymenthistory}"><i class="fas fa-history"></i> Payment History</a>
+            </li>
+            <li>
+                <a th:href="@{/userdetail}"><i class="fas fa-user"></i> Profile</a>
+            </li>
+            <li>
+                <a th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </li>
+        </ul>
+</aside>
+	<div>
+  <div th:if="${userDetail != null and not #lists.isEmpty(userDetail)}" class="loan-item">
+        <div class="loan-details" th:each="user : ${userDetail}">
+            <label><b>Borrower Id : </b></label><p th:text="${user.id}"></p><br>
+            <label><b>Name   :   </b></label><p th:text="${user.name}"></p><br>
+            <label><b>Date Of Birth : </b></label><p th:text="${user.dateOfBirth}"></p><br>
+            <label><b>Phone Number : </b></label><p th:text="${user.phoneNo}"></p><br>
+            <label><b>Email Id : </b></label><p th:text="${user.email}"></p><br>
+            <label><b>Location : </b></label><p th:text="${user.location}"></p><br>
+            <form th:action="@{/updateuserdetails}">
+                <input type="hidden" name="id" th:value="${user.id}">
+                <input type="hidden" name="name" th:value="${user.name}">
+                <input type="hidden" name="email" th:value="${user.email}">
+                <button>Edit</button>
+            </form>
+        </div>
+    </div>
+    <p th:unless="${userDetail != null and not #lists.isEmpty(userDetail)}">No Records found</p>
+    <a th:href="@{/borrowerHomePage}"><button>Back</button></a>
+</div>
+</body>
+</html>

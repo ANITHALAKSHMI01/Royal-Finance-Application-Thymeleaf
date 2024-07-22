@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" th:href="@{/css/userDashboard.css}">
+<link rel="stylesheet" th:href="@{/css/card.css}"> 
+<link rel="stylesheet" th:href="@{/css/loanDetail.css}"> 
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="icon" type="image/x-icon" href="images/flogo.jpg">
+<title>Lender Loan Profile</title>
+<style>
+.alert
+{
+	 position:relative;
+    bottom:900px;
+}
+</style>
+</head>
+<body>
+<aside id="sidebar">
+        <div class="sidebar-header">
+            <img th:src="@{/images/flogo.jpg}" alt="image" id="image1">
+            <h4>Royal Finance</h4>
+        </div>
+        <ul class="list-unstyled components">
+            <li>
+                <a th:href="@{/allowborrower}"><i class="fas fa-file-alt"></i> Apply</a>
+            </li>
+            <li>
+                <a th:href="@{/appliedloandetail}"><i class="fas fa-info-circle"></i> Status</a>
+            </li>
+            <li>
+                <a th:href="@{/getreceipt}"><i class="fas fa-receipt"></i> Invoice</a>
+            </li>
+            <li>
+                <a th:href="@{/payemi}"><i class="fas fa-money-bill-wave"></i> Pay EMI</a>
+            </li>
+            <li>
+                <a th:href="@{/paymenthistory}"><i class="fas fa-history"></i> Payment History</a>
+            </li>
+            <li>
+                <a th:href="@{/userdetail}"><i class="fas fa-user"></i> Profile</a>
+            </li>
+            <li>
+                <a th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </li>
+        </ul>
+</aside>
+<div th:if="${borrowers != null and not #lists.isEmpty(borrowers)}" class="loan-item">
+<div th:each="borrower : ${borrowers}" class="loan-details">
+<label>Borrower Id :</label><p class="out" th:text="${borrower.borrowerId}"></p><br>
+<label>Salary :</label><p class="out" th:text="${borrower.salary}"></p><br>
+<label>Loan Amount :</label><p class="out" th:text="${borrower.borrowerId}"></p><br>
+<label>Tenure :</label><p class="out" th:text="${borrower.tenure}"></p><br>
+<label>Payslip :</label><img th:src="${paySlip}" alt="Pay Slip" style="width:200px"><br><br>
+<label>PAN Image :</label><img th:src="${pan}" alt="PAN Image"><br><br>
+<label>Government Id :</label><img th:src="${governmentId}" alt="Government Id" style="width:200px"><br><br>
+<label>status :</label><p class="out" th:text="${borrower.status}"></p><br>
+</div>
+</div>
+   <div th:if="${message}">
+        <div th:class="'alert alert-' + ${type}" role="alert">
+            <span th:text="${message == 'noDetail' ? 'You did not apply  loan!' : 
+            message == 'viewDetail' ? 'Have a nice day!' : ''}"></span>                   
+        </div>
+    </div>
+</body>
+</html>
