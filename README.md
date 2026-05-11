@@ -46,7 +46,8 @@
 
 ### Technologies used:-
 1. Front-End Development:
-- Jsp. 
+- Thymeleaf
+- HTML. 
 - CSS.
 - Javascript.
 
