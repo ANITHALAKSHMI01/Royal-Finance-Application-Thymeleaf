@@ -40,6 +40,7 @@
 <span>&#10004;</span> Loan Applied Status.<br>
 <span>&#10004;</span> Invoice.<br>
 <span>&#10004;</span> Pay EMI.<br>
+<span>&#10004;</span> Preclosure.<br>
 <span>&#10004;</span> Payment History.<br>
 <span>&#10004;</span> Logout.<br>
 
